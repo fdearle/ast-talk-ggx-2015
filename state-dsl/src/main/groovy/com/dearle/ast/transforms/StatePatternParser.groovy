@@ -56,14 +56,25 @@ class StatePatternParser implements GroovyClassVisitor {
         }
     }
 
-    def getLabelParam(stmnt) {
-        if (stmnt instanceof ExpressionStatement &&
-            stmnt.expression instanceof ConstantExpression &&
-            stmnt.statementLabel
-        ) {
-            return stmnt.expression.value.toString()
+    def collectStates(MethodNode node) {
+        collectLabeledConstantStrings(node, 'state').each { stmnt ->
+            model.addState stmnt.expression.value.toString()
         }
-        null
+    }
+
+    def collectEvents(MethodNode node) {
+        collectLabeledConstantStrings(node, 'event').each { stmnt ->
+            model.addEvent stmnt.expression.value.toString()
+        }
+    }
+
+    def collectLabeledConstantStrings(MethodNode node, label) {
+        node.code.statements.findAll { stmnt ->
+            stmnt instanceof ExpressionStatement &&
+                    stmnt.expression instanceof ConstantExpression &&
+                    stmnt.statementLabel &&
+                    stmnt.statementLabel == label
+        }
     }
 
     def handleWhen(statement, event, transition) {
@@ -98,6 +109,16 @@ class StatePatternParser implements GroovyClassVisitor {
         }
     }
 
+    def getLabelParam(stmnt) {
+        if (stmnt instanceof ExpressionStatement &&
+                stmnt.expression instanceof ConstantExpression &&
+                stmnt.statementLabel
+        ) {
+            return stmnt.expression.value.toString()
+        }
+        null
+    }
+
     @Override
     void visitConstructor(ConstructorNode node) {
     }
@@ -108,27 +129,6 @@ class StatePatternParser implements GroovyClassVisitor {
 
     @Override
     void visitProperty(PropertyNode node) {
-    }
-
-    def collectStates(MethodNode node) {
-        collectLabeledConstantStrings(node, 'state').each { stmnt ->
-            model.addState stmnt.expression.value.toString()
-        }
-    }
-
-    def collectEvents(MethodNode node) {
-        collectLabeledConstantStrings(node, 'event').each { stmnt ->
-            model.addEvent stmnt.expression.value.toString()
-        }
-    }
-
-    def collectLabeledConstantStrings(MethodNode node, label) {
-        node.code.statements.findAll { stmnt ->
-            stmnt instanceof ExpressionStatement &&
-            stmnt.expression instanceof ConstantExpression &&
-            stmnt.statementLabel &&
-            stmnt.statementLabel == label
-        }
     }
 
     def addError(String msg, ASTNode expr, SourceUnit source) {

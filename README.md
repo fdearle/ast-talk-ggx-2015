@@ -1,24 +1,16 @@
-Groovy Application project template
-------------------------------------
+AST Transfroms: Building a Game Engine DSL for kids
+---------------------------------------------------
 
-You have just created a basic Groovy application. There is a standard project
-structure for source code and tests.
+Presented at GGX 2015 in CodeNode
 
-In this project you get:
+Talk available on [Skills Matter](https://skillsmatter.com/skillscasts/7083-ast-transforms-building-a-simple-game-engine-dsl-for-kids)
 
-* A Gradle build file
-* A standard project structure:
+Slides on [Slideshare](http://www.slideshare.net/FergalDearle/ggx-2015-london-ast-transforms-building-a-simple-game-engine-dsl-for-kids)
 
-    <proj>
-      |
-      +- src
-          |
-          +- main
-          |     |
-          |     +- groovy
-          |
-          +- test
-          |   |
-          |   +- groovy
+For a short while until end of year some discount is available on the book [Groovy for Domain Specific Languages, 2nd Edition](http://bit.ly/1XVgZnC)
 
-          |
+Use these discount codes:
+
+* GGX2015ebook for 50% off the eBook.
+* GGX2015print for 30% off the print book.
+
